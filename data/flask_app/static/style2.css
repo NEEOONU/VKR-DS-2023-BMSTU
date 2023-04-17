@@ -1,0 +1,71 @@
+video {
+  height: 100%;
+  width: 100%;  
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  text-shadow: 10px 10px 10px #000000;
+  font-size: 280%;
+}
+
+form {
+  margin: auto;
+  width: 28%;
+  color: #ffffff;
+  background-color: rgba(6,18,24,0.9);
+}
+
+input[type=submit] {
+  background-color:#061218;
+  color: #ffffff;
+  border-color: #ffffff;
+  border-style: groove;
+  border-width: 2px;
+  text-shadow: 2px 2px 2px #000000;
+
+}
+
+.result {
+  margin: auto; 
+  width: 27%;
+  border: 1px outset #ffffff4d;
+  color: #fff;
+  background-color: #061218da;
+}
+
+.calculate{
+  position: relative;
+  bottom: -15px;
+}
+
+button {
+  font-size: 12px;
+  position: relative;
+  bottom: -172px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+h5 {
+  color: #fff;
+  position: relative;
+  bottom: -165px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div { 
+  margin-bottom: 20px; 
+}
+
+label { 
+  display: inline-block; 
+  width: 300px; 
+}

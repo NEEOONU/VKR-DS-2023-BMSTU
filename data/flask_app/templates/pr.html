@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <font face="consolas">
+    <head>
+        <meta charset="UTF-8">
+        <title>Расчет прочности при растяжении</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    </head>
+
+    <h1 style="font-size:40px;" align="center">Расчет прочности при растяжении</h1>
+    
+    <video poster="/static/images/11.jpg" autoplay playsinline muted loop>
+        <source src="/static/images/AjarJaggedClumber2.webm" type="video/webm">
+    </video>
+
+    <form action="" method="post">  
+        <fieldset>
+            <b><legend align="center"><big>Введите параметры</big></legend>
+            <br><br>
+            <div><label for="mn">Соотношение матрица-наполнитель, МПа:</label><input type="float" name="mn" required></div>
+            <div><label for="plot">Плотность, кг/м3:</label><input type="float" name="plot" required></div>
+            <div><label for="mup">Модуль упругости, ГПа:</label><input type="float" name="mup" required></div>
+            <div><label for="ko">Количество отвердителя, м.%:</label><input type="float" name="ko" required></div>
+            <div><label for="seg">Содержание эпоксидных групп,%_2:</label><input type="float" name="seg" required></div>
+            <div><label for="tv">Температура вспышки, С_2:</label><input type="float" name="tv" required></div>
+            <div><label for="pp">Поверхностная плотность, г/м2:</label><input type="float" name="pp" required></div>
+            <div><label for="mup">Модуль упругости при растяжении, ГПа:</label><input type="float" name="mup" required></div>
+            <div><label for="ps">Потребление смолы, г/м2:</label><input type="float" name="ps" required></div>
+            <div><label for="shn">Шаг нашивки:</label><input type="float" name="shn" required></div>
+            <div><label for="pln">Плотность нашивки:</label><input type="float" name="pln" required></div>
+        
+            <div class="calculate" align="center"><input type="submit" value="Рассчитать"></div></b>
+        </fieldset>
+        </form>
+
+        <div style="padding-left:10px;" class="result" align="left">
+            {% if message %}
+                <br><b><div>{{message}}</div></b>
+            {% endif %}
+        </div>
+        
+        <a href="{{url_for('choose_prediction_method')}}"><button>Вернуться на главную страницу</button></a>
+        
+        <div class="project" ><h5 align="center">Проект выполнил слушатель курса "Аналитик данных (Data scientist)"<br>Головач Святослав Сергеевич</h5></div></font>    
+</html>

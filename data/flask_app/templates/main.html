@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <font face="consolas">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <b><title>Прогнозирование конечных свойств композиционных материалов</title></b>
+    <style>
+      body {
+        background-image: url("../static/images/11.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      </style>
+  </head>
+  <body> 
+      <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+          
+      <h1 align="center">Прогнозирование свойств композитов</h1>
+
+    <b><div align="center" class="upr"><a href="{{url_for('upr_predict')}}"><button style="font-size:25px;">Прогнозирование модуля упругости при растяжении</button></a></div>
+    <div align="center" class="pr"><a href="{{url_for('pr_predict')}}"><button style="font-size:25px;">Прогнозирование прочности при растяжении</button></a></div>
+    <div align="center" class="mn"><a href="{{url_for('mn_predict')}}"><button style="font-size:25px;">Рекомендация соотношения матрица-наполнитель</button></a></div></b>
+             
+      <div class="content">
+        <p>Ссылка на мой GitHub: <a href="https://github.com/NEEOONU/VKR-DS-2023-BMSTU" target="_blank">GitHub</a></p>
+      </div>
+  </body>
+  </font>
+</html>

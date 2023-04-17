@@ -1,0 +1,40 @@
+/* Style the header */
+h1 {
+  padding: 30px;
+  text-align: center;
+  font-size: 50px;
+  text-shadow: 15px 15px 15px #000000;
+  color: white;
+}
+
+.upr{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 75px);
+}
+
+.pr{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 192px);
+}
+
+.mn{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 300px);
+}
+
+
+.content {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0px);
+  bottom: 0%;
+  color: #fff;
+  text-align: center;
+  font-size: 130%;
+  width: 420px;
+  background-color: rgba(6,18,24,0.9);
+  text-shadow: 5px 5px 5px #000000;
+}
