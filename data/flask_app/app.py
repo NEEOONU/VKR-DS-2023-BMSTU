@@ -1,10 +1,6 @@
 from flask import Flask, request, render_template
 import tensorflow as tf
 import pickle
-import sklearn
-from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,22 +8,44 @@ def choose_prediction_method():
     return render_template('main.html')
 
 def upr_prediction(params):
+    #загружаем нормализатор входных значений (вводимых параметров)
+    scaler_in_upr = pickle.load(open('models/scaler_in_upr.pkl', 'rb'))
+    #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_upr')
     model = pickle.load(open('models/best_model_upr.pkl', 'rb'))
-    pred = model.predict([params])
-    return MinMaxScaler.inverse_transform(pred)
+    #загружаем денормализатор значения целевого признака
+    scaler_out_upr = pickle.load(open('models/scaler_out_upr.pkl', 'rb'))
+    pred = model.predict(scaler_in_upr.transform([params]))
+    #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания с исходным масштабом
+    pred_out = pred * scaler_out_upr
+    return pred_out
 
 def pr_prediction(params):
+    #загружаем нормализатор входных значений (вводимых параметров)
+    scaler_in_pr = pickle.load(open('models/scaler_in_pr.pkl', 'rb'))
+    #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_pr')
     model = pickle.load(open('models/best_model_pr.pkl', 'rb'))
-    pred = model.predict([params])
-    return MinMaxScaler.inverse_transform(pred)
+    #загружаем денормализатор значения целевого признака
+    scaler_out_pr = pickle.load(open('models/scaler_out_pr.pkl', 'rb'))
+    pred = model.predict(scaler_in_pr.transform([params]))
+    #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания
+    pred_out = pred * scaler_out_pr
+    return pred_out
 
 def mn_prediction(params):
+    #загружаем нормализатор входных значений (вводимых параметров)
+    scaler_in_mn = pickle.load(open('models/scaler_in_mn.pkl', 'rb'))
+    #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_mn')
     model = pickle.load(open('models/best_model_mn.pkl', 'rb'))
-    pred = model.predict([params])
-    return MinMaxScaler.inverse_transform(pred)
+    #загружаем денормализатор значения целевого признака
+    scaler_out_mn = pickle.load(open('models/scaler_out_mn.pkl', 'rb'))
+    pred = model.predict(scaler_in_mn.transform([params]))
+    #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания
+    pred_out = pred * scaler_out_mn
+    return pred_out
+
 
 @app.route('/upr/', methods=['POST', 'GET'])
 def upr_predict():
@@ -36,8 +54,10 @@ def upr_predict():
         param_list = ('mn', 'plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'pr', 'ps', 'shn', 'pln')
         params = []
         for i in param_list:
-            param = request.form.get(i)
-            params.append(param)
+            param_in = request.form.get(i)
+            # param_out = (param_in - np.min(df_minmax['Модуль упругости при растяжении, ГПа'])) / ((np.max(df_minmax['Модуль упругости при растяжении, ГПа']) - np.min(df_minmax['Модуль упругости при растяжении, ГПа'])))
+            param_out = param_in
+            params.append(param_out)
         params = [float(i.replace(',', '.')) for i in params]
 
         message = f'Спрогнозированное значение модуля упругости при растяжении для введённых параметров: {upr_prediction(params)} ГПа'
@@ -72,5 +92,5 @@ def mn_predict():
     return render_template('mn.html', message=message)
 
 if __name__ == '__main__':
-    # app.debug = True
+    app.debug = True
     app.run()
