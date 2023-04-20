@@ -96,5 +96,5 @@ def mn_predict():
     return render_template('mn.html', message=message)
 
 if __name__ == '__main__':
-    # app.debug = True
+    app.debug = True
     app.run()
