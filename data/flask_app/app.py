@@ -54,10 +54,8 @@ def upr_predict():
         param_list = ('mn', 'plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'pr', 'ps', 'shn', 'pln')
         params = []
         for i in param_list:
-            param_in = request.form.get(i)
-            # param_out = (param_in - np.min(df_minmax['Модуль упругости при растяжении, ГПа'])) / ((np.max(df_minmax['Модуль упругости при растяжении, ГПа']) - np.min(df_minmax['Модуль упругости при растяжении, ГПа'])))
-            param_out = param_in
-            params.append(param_out)
+            param = request.form.get(i)
+            params.append(param)
         params = [float(i.replace(',', '.')) for i in params]
 
         message = f'Спрогнозированное значение модуля упругости при растяжении для введённых параметров: {upr_prediction(params)} ГПа'
@@ -92,5 +90,5 @@ def mn_predict():
     return render_template('mn.html', message=message)
 
 if __name__ == '__main__':
-    app.debug = True
+    # app.debug = True
     app.run()
