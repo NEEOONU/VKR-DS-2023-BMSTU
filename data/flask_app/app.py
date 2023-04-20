@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template
 import tensorflow as tf
 import pickle
-
+import sklearn
+from sklearn import preprocessing
+from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
@@ -13,19 +15,19 @@ def upr_prediction(params):
     # model = tf.keras.models.load_model('models/net_upr')
     model = pickle.load(open('models/best_model_upr.pkl', 'rb'))
     pred = model.predict([params])
-    return pred
+    return MinMaxScaler.inverse_transform(pred)
 
 def pr_prediction(params):
     # model = tf.keras.models.load_model('models/net_pr')
     model = pickle.load(open('models/best_model_pr.pkl', 'rb'))
     pred = model.predict([params])
-    return pred
+    return MinMaxScaler.inverse_transform(pred)
 
 def mn_prediction(params):
     # model = tf.keras.models.load_model('models/net_mn')
     model = pickle.load(open('models/best_model_mn.pkl', 'rb'))
     pred = model.predict([params])
-    return pred
+    return MinMaxScaler.inverse_transform(pred)
 
 @app.route('/upr/', methods=['POST', 'GET'])
 def upr_predict():
