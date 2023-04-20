@@ -13,11 +13,13 @@ def upr_prediction(params):
     #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_upr')
     model = pickle.load(open('models/best_model_upr.pkl', 'rb'))
-    #загружаем денормализатор значения целевого признака
-    scaler_out_upr = pickle.load(open('models/scaler_out_upr.pkl', 'rb'))
+    #загружаем первую часть денормализатора
+    scaler_out_upr1 = pickle.load(open('models/scaler_out_upr1.pkl', 'rb'))
+    #загружаем вторую часть денормализатора
+    scaler_out_upr2 = pickle.load(open('models/scaler_out_upr2.pkl', 'rb'))
     pred = model.predict(scaler_in_upr.transform([params]))
     #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания с исходным масштабом
-    pred_out = pred * scaler_out_upr
+    pred_out = pred * scaler_out_upr1 + scaler_out_upr2
     return pred_out
 
 def pr_prediction(params):
@@ -26,11 +28,13 @@ def pr_prediction(params):
     #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_pr')
     model = pickle.load(open('models/best_model_pr.pkl', 'rb'))
-    #загружаем денормализатор значения целевого признака
-    scaler_out_pr = pickle.load(open('models/scaler_out_pr.pkl', 'rb'))
+    #загружаем первую часть денормализатора
+    scaler_out_pr1 = pickle.load(open('models/scaler_out_pr1.pkl', 'rb'))
+    #загружаем вторую часть денормализатора
+    scaler_out_pr2 = pickle.load(open('models/scaler_out_pr2.pkl', 'rb'))
     pred = model.predict(scaler_in_pr.transform([params]))
     #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания
-    pred_out = pred * scaler_out_pr
+    pred_out = pred * scaler_out_pr1 + scaler_out_pr2
     return pred_out
 
 def mn_prediction(params):
@@ -39,11 +43,13 @@ def mn_prediction(params):
     #загружаем модель расчёта
     # model = tf.keras.models.load_model('models/net_mn')
     model = pickle.load(open('models/best_model_mn.pkl', 'rb'))
-    #загружаем денормализатор значения целевого признака
-    scaler_out_mn = pickle.load(open('models/scaler_out_mn.pkl', 'rb'))
+    #загружаем первую часть денормализатора
+    scaler_out_mn1 = pickle.load(open('models/scaler_out_mn1.pkl', 'rb'))
+    #загружаем вторую часть денормализатора
+    scaler_out_mn2 = pickle.load(open('models/scaler_out_mn2.pkl', 'rb'))
     pred = model.predict(scaler_in_mn.transform([params]))
     #выдаём предсказание денормализованного вида, то есть не трансформированное значение предсказания
-    pred_out = pred * scaler_out_mn
+    pred_out = pred * scaler_out_mn1 + scaler_out_mn2
     return pred_out
 
 
@@ -65,7 +71,7 @@ def upr_predict():
 def pr_predict():
     message = ''
     if request.method == 'POST':
-        param_list = ('mn', 'plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'mup', 'ps', 'shn', 'pln')
+        param_list = ('mn', 'plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'mupr', 'ps', 'shn', 'pln')
         params = []
         for i in param_list:
             param = request.form.get(i)
@@ -79,7 +85,7 @@ def pr_predict():
 def mn_predict():
     message = ''
     if request.method == 'POST':
-        param_list = ('plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'mup', 'pr', 'ps', 'shn', 'pln')
+        param_list = ('plot', 'mup', 'ko', 'seg', 'tv', 'pp', 'mupr', 'pr', 'ps', 'shn', 'pln')
         params = []
         for i in param_list:
             param = request.form.get(i)
